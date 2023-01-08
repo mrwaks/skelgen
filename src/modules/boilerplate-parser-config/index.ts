@@ -1,37 +1,37 @@
 'use strict';
 
-'use strict';
-
 // Core Module
-import { existsSync } from 'fs';
 import { readFile } from 'fs/promises';
 import { join } from 'path';
 
+// Lib
+import { checkup } from './lib/index.js';
+
 // Types
-import { IBoilerPlateConfig } from './types/index.js';
+import { IBoilerPlateConfig } from '../types.common.js';
 
 const rootPath = process.cwd();
-const pathToConfigFile = join(rootPath, 'boilerplate.config.json');
+const pathToBoilerplateConfigFile = join(rootPath, 'boilerplate.config.json');
 
 const boilerplateParserConfig = async () => {
-  if (!existsSync(pathToConfigFile)) {
-    console.log('Error: provide config file: "boilerplate.config.json"');
-    return;
+  checkup.boilerplateExistence(pathToBoilerplateConfigFile);
+
+  const boilerplateConfigAsString = (await readFile(pathToBoilerplateConfigFile)).toString();
+
+  checkup.boilerplateEmpty(boilerplateConfigAsString);
+
+  const boilerplateConfig = JSON.parse(boilerplateConfigAsString) as IBoilerPlateConfig;
+
+  checkup.boilerplateEnvironment(boilerplateConfig);
+
+  if (boilerplateConfig.environment === 'frontend') {
+    checkup.boilerplateFrontend(boilerplateConfig);
   }
-  const getConfigFile = await readFile(pathToConfigFile);
-  const configFileAsString = getConfigFile.toString();
-  if (!configFileAsString.toString().length) {
-    console.log('Error: configure your config file');
-    return;
+  if (boilerplateConfig.environment === 'backend') {
+    checkup.boilerplateBackend(boilerplateConfig);
   }
-  const configFileParse = JSON.parse(configFileAsString) as IBoilerPlateConfig;
-  if (!configFileParse.environment) {
-    console.log('Error: provide an environment');
-    return;
-  }
-  // Edit logic...
   
-  return configFileParse;
+  return boilerplateConfig;
 };
 
 export default boilerplateParserConfig;

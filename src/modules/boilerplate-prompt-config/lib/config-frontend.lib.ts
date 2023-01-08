@@ -4,10 +4,10 @@
 import { prompt } from '../setup/index.js';
 
 // Config
-import config from '../config.js';
+import config from '../../config.common.js';
 
 // Types
-import { IBoilerPlateConfig } from '../types/index.js';
+import { IBoilerPlateConfig } from '../../types.common.js';
 
 const promptFramework = [
   {

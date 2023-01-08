@@ -5,7 +5,7 @@ import configFrontend from './config-frontend.lib.js';
 import configBackend from './config-backend.lib.js';
 
 // Types
-import { IBoilerPlateConfig } from '../types/index.js';
+import { IBoilerPlateConfig } from '../../types.common.js';
 
 const dispatchingEnvironment = async (boilerplateConfig: Partial<IBoilerPlateConfig>) => {
   switch (boilerplateConfig.environment) {

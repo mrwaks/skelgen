@@ -6,7 +6,7 @@ import { readFile } from 'fs/promises';
 import { join } from 'path';
 
 // Types
-import { IBoilerPlateConfig } from '../types/index.js';
+import { IBoilerPlateConfig } from '../../types.common.js';
 
 const rootPath = process.cwd();
 const pathToConfigFile = join(rootPath, 'boilerplate.config.json');

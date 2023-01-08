@@ -8,7 +8,7 @@ import {
 } from './lib/index.js';
 
 // Types
-import { IBoilerPlateConfig } from './types/index.js';
+import { IBoilerPlateConfig } from '../types.common.js';
 
 
 const boilerplatePromptConfig = async (boilerplateConfig: Partial<IBoilerPlateConfig>) => {
