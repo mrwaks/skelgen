@@ -1,11 +1,10 @@
 'use strict';
 
-const boilerplate = {
-  config: {},
+const config = {
   environments: ['frontend', 'backend'],
   languages: ['nodejs', 'python'],
   frontendFrameworks: ['react', 'vue', 'angular', 'vanilla'],
   backendFrameworks: ['express', 'nest', 'vanilla'],
 };
 
-export default boilerplate;
+export default config;

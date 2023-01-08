@@ -3,19 +3,20 @@
 'use strict';
 
 // Modules
-import { configBoilerPlate, parserConfigFile } from './modules/index.js';
-
-// Config
-import config from './config/index.js';
+import { 
+  boilerplatePromptConfig, 
+  boilerplateParserConfig,
+} from './modules/index.js';
 
 const main = async ([, , ...args] = process.argv) => {
   if (!args.length) {
-    await configBoilerPlate(config.boilerplate.config);
-    console.log('Here\'s your boilerplate config:', config.boilerplate.config);
+    let boilerplateConfig = {};
+    await boilerplatePromptConfig(boilerplateConfig);
+    console.log('Here\'s your boilerplate config:', boilerplateConfig);
   }
   if (args.length === 1 && /^config/.test(args[0])) {
     console.log('Parsing started...');
-    const boilerplateConfig = await parserConfigFile();
+    const boilerplateConfig = await boilerplateParserConfig();
     console.log('Here\'s your boilerplate config:', boilerplateConfig);
   }
 };

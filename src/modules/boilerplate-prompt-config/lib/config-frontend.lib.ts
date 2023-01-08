@@ -4,10 +4,10 @@
 import { prompt } from '../setup/index.js';
 
 // Config
-import config from '../config/index.js';
+import config from '../config.js';
 
 // Types
-import { IBoilerPlateConfig } from 'src/types';
+import { IBoilerPlateConfig } from '../types/index.js';
 
 const promptFramework = [
   {
@@ -15,7 +15,7 @@ const promptFramework = [
     type: 'list',
     name: 'choice',
     message: 'What do you want to work your frontend with ?',
-    choices: config.boilerplate.frontendFrameworks,
+    choices: config.frontendFrameworks,
   },
 ];
 
@@ -24,8 +24,8 @@ const configFrontendFramework = async (boilerplateConfig: Partial<IBoilerPlateCo
   boilerplateConfig.framework = response.choice;
 };
 
-const configFrontend = async () => {
-  await configFrontendFramework(config.boilerplate.config);
+const configFrontend = async (boilerplateConfig: Partial<IBoilerPlateConfig>) => {
+  await configFrontendFramework(boilerplateConfig);
 };
 
 export default configFrontend;

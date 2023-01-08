@@ -4,7 +4,7 @@
 import { prompt } from '../setup/index.js';
 
 // Config
-import config from '../config/index.js';
+import config from '../config.js';
 
 // Types
 import { IBoilerPlateConfig } from '../types/index.js';
@@ -15,7 +15,7 @@ const promptLanguage = [
     type: 'list',
     name: 'choice',
     message: 'Which language do you want to work with ?',
-    choices: config.boilerplate.languages,
+    choices: config.languages,
   },
 ];
 
@@ -25,7 +25,7 @@ const promptFramework = [
     type: 'list',
     name: 'choice',
     message: 'Which framework do you want to work with ?',
-    choices: config.boilerplate.backendFrameworks,
+    choices: config.backendFrameworks,
   },
 ];
 
@@ -47,9 +47,9 @@ const configBackendFramework = async (boilerplateConfig: Partial<IBoilerPlateCon
   }
 };
 
-const configBackend = async () => {
-  await configBackendLanguage(config.boilerplate.config);
-  await configBackendFramework(config.boilerplate.config);
+const configBackend = async (boilerplateConfig: Partial<IBoilerPlateConfig>) => {
+  await configBackendLanguage(boilerplateConfig);
+  await configBackendFramework(boilerplateConfig);
 };
 
 export default configBackend;

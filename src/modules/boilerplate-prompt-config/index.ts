@@ -1,20 +1,21 @@
 'use strict';
 
-// Modules
+// Lib
 import {
   configEnvironment,
   dispatchingEnvironment,
   configTypescript,
-} from './index.js';
+} from './lib/index.js';
 
 // Types
-import { IBoilerPlateConfig } from 'src/types';
+import { IBoilerPlateConfig } from './types/index.js';
 
 
-const configBoilerPlate = async (boilerplateConfig: Partial<IBoilerPlateConfig>) => {
+const boilerplatePromptConfig = async (boilerplateConfig: Partial<IBoilerPlateConfig>) => {
   await configEnvironment(boilerplateConfig);
   await dispatchingEnvironment(boilerplateConfig);
   await configTypescript(boilerplateConfig);
+  return boilerplateConfig;
 };
 
-export default configBoilerPlate;
+export default boilerplatePromptConfig;

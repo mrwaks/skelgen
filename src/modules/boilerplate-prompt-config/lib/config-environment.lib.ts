@@ -4,12 +4,12 @@
 import { prompt } from '../setup/index.js';
 
 // Config
-import config from '../config/index.js';
+import config from '../config.js';
 
 // Types
 import { IBoilerPlateConfig } from '../types/index.js';
 
-const environments = config.boilerplate.environments;
+const environments = config.environments;
 
 const promptEnvironment = [
   {

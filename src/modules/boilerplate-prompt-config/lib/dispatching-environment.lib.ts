@@ -1,10 +1,8 @@
 'use strict';
 
-// Modules
-import {
-  configFrontend,
-  configBackend,
-} from './index.js';
+// Lib
+import configFrontend from './config-frontend.lib.js';
+import configBackend from './config-backend.lib.js';
 
 // Types
 import { IBoilerPlateConfig } from '../types/index.js';
@@ -12,10 +10,10 @@ import { IBoilerPlateConfig } from '../types/index.js';
 const dispatchingEnvironment = async (boilerplateConfig: Partial<IBoilerPlateConfig>) => {
   switch (boilerplateConfig.environment) {
     case 'frontend':
-      await configFrontend();
+      await configFrontend(boilerplateConfig);
       break;
     case 'backend':
-      await configBackend();
+      await configBackend(boilerplateConfig);
       break;
   }
 };

@@ -4,13 +4,13 @@
 import { prompt } from '../setup/index.js';
 
 // Config
-import config from '../config/index.js';
+import config from '../config.js';
 
 // Types
 import { IBoilerPlateConfig } from '../types/index.js';
 
-const frontendFrameworks = config.boilerplate.frontendFrameworks;
-const backendFrameworks = config.boilerplate.backendFrameworks;
+const frontendFrameworks = config.frontendFrameworks;
+const backendFrameworks = config.backendFrameworks;
 
 const promptTypescript = [
   {
@@ -30,7 +30,7 @@ const configTypescript = async (boilerplateConfig: Partial<IBoilerPlateConfig>) 
     for (let frame of frontendFrameworks) {
       if (framework === frame) {
         const response = await prompt(promptTypescript);
-        boilerplateConfig.typescript = response.choice;
+        boilerplateConfig.typescript = response.choice === 'yes';
         break;
       }
     }
@@ -40,7 +40,7 @@ const configTypescript = async (boilerplateConfig: Partial<IBoilerPlateConfig>) 
     for (let frame of backendFrameworks) {
       if (framework === frame) {
         const response = await prompt(promptTypescript);
-        boilerplateConfig.typescript = response.choice;
+        boilerplateConfig.typescript = response.choice === 'yes';
         break;
       }
     }

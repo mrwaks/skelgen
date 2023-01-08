@@ -4,12 +4,11 @@
   "description": "Fully modular boilerplate generator",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/index.js",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix"
   },
   "bin": {
-    "boilerplate": "./dist/index.js"
+    "skelgen": "./dist/index.js"
   },
   "keywords": [
     "generator",
