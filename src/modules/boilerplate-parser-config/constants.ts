@@ -14,6 +14,7 @@ const constants = {
     BOILERPLATE_INVALID_LANGUAGE: 'Error: invalid language: (valid languages: %s)',
     BOILERPLATE_INVALID_FRAMEWORK: 'Error: invalid framework: (valid frameworks: %s)',
     BOILERPLATE_TYPESCRIPT_BOOLEAN: 'Error: typescript value must be of type boolean',
+    BOILERPLATE_TYPESCRIPT_NOT_COMPATIBLE: 'Error: typescript is not compatible with this language',
   },
 };
 
