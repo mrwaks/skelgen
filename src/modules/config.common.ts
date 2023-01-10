@@ -6,14 +6,21 @@ const config = {
     'backend',
   ],
   languages: [
-    'nodejs',
+    'javascript',
+    'python',
   ],
-  frontendFrameworks: [
+  frontendJsFrameworks: [
     'vanilla',
   ],
-  backendFrameworks: [
+  backendJsFrameworks: [
     'express',
     'vanilla',
+  ],
+  frontendPythonFrameworks: [
+    'test',
+  ],
+  backendPythonFrameworks: [
+    'django',
   ],
 };
 
