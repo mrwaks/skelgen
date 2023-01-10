@@ -9,12 +9,12 @@ import config from '../../config.common.js';
 // Types
 import { IBoilerPlateConfig } from '../../types.common.js';
 
-const frontendFrameworks = config.frontendFrameworks;
-const backendFrameworks = config.backendFrameworks;
+const frontendJsFrameworks = config.frontendJsFrameworks;
+const backendJsFrameworks = config.backendJsFrameworks;
 
 const promptTypescript = [
   {
-    prefix: 'boiler-gen -',
+    prefix: 'skelgen -',
     type: 'list',
     name: 'choice',
     message: 'Do you want to use typescript ?',
@@ -27,7 +27,7 @@ const configTypescript = async (boilerplateConfig: Partial<IBoilerPlateConfig>) 
   const framework = boilerplateConfig.framework;
 
   if (environment === 'frontend') {
-    for (let frame of frontendFrameworks) {
+    for (let frame of frontendJsFrameworks) {
       if (framework === frame) {
         const response = await prompt(promptTypescript);
         boilerplateConfig.typescript = response.choice === 'yes';
@@ -37,7 +37,7 @@ const configTypescript = async (boilerplateConfig: Partial<IBoilerPlateConfig>) 
   }
 
   if (environment === 'backend') {
-    for (let frame of backendFrameworks) {
+    for (let frame of backendJsFrameworks) {
       if (framework === frame) {
         const response = await prompt(promptTypescript);
         boilerplateConfig.typescript = response.choice === 'yes';

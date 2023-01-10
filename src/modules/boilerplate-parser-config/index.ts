@@ -24,10 +24,10 @@ const boilerplateParserConfig = async () => {
 
   checkup.boilerplateEnvironment(boilerplateConfig);
 
-  if (boilerplateConfig.environment === 'frontend') {
+  if (boilerplateConfig.environment.toLowerCase() === 'frontend') {
     checkup.boilerplateFrontend(boilerplateConfig);
   }
-  if (boilerplateConfig.environment === 'backend') {
+  if (boilerplateConfig.environment.toLowerCase() === 'backend') {
     checkup.boilerplateBackend(boilerplateConfig);
   }
   

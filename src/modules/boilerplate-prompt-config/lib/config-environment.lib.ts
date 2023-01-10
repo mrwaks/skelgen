@@ -13,7 +13,7 @@ const environments = config.environments;
 
 const promptEnvironment = [
   {
-    prefix: 'boiler-gen -',
+    prefix: 'skelgen -',
     type: 'list',
     name: 'choice',
     message: 'What kind of environment do you want ?',

@@ -11,7 +11,7 @@ import { IBoilerPlateConfig } from '../../types.common.js';
 
 const promptLanguage = [
   {
-    prefix: 'boiler-gen -',
+    prefix: 'skelgen -',
     type: 'list',
     name: 'choice',
     message: 'Which language do you want to work with ?',
@@ -19,37 +19,38 @@ const promptLanguage = [
   },
 ];
 
-const promptFramework = [
-  {
-    prefix: 'boiler-gen -',
+const setPromptFramework = (language: string) => {
+  const jsFrameworks = config.backendJsFrameworks;
+  const pyFrameworks = config.backendPythonFrameworks;
+
+  const promptFramework = {
+    prefix: 'skelgen -',
     type: 'list',
     name: 'choice',
     message: 'Which framework do you want to work with ?',
-    choices: config.backendFrameworks,
-  },
-];
+    choices: language === 'javascript' ? jsFrameworks : language === 'python' ? pyFrameworks : 'javascript',
+  };
 
-const configBackendLanguage = async (boilerplateConfig: Partial<IBoilerPlateConfig>) => {
-  const response = await prompt(promptLanguage);
-  boilerplateConfig.language = response.choice;
+  return promptFramework;
 };
 
-const configBackendFramework = async (boilerplateConfig: Partial<IBoilerPlateConfig>) => {
-  let response;
-  switch (boilerplateConfig.language) {
-    case 'nodejs':
-      response = await prompt(promptFramework);
-      boilerplateConfig.framework = response.choice;
-      break;
-    case 'python':
-      // Edit logic here...
-      break;
-  }
+const configLanguage = async () => {
+  const response = await prompt(promptLanguage);
+  return response.choice;
+};
+
+const configBackendFramework = async (language: string) => {
+  const promptFramework = setPromptFramework(language);
+  const response = await prompt([promptFramework]);
+  return response.choice;
 };
 
 const configBackend = async (boilerplateConfig: Partial<IBoilerPlateConfig>) => {
-  await configBackendLanguage(boilerplateConfig);
-  await configBackendFramework(boilerplateConfig);
+  const language = await configLanguage();
+  const framework = await configBackendFramework(language);
+
+  boilerplateConfig.language = language;
+  boilerplateConfig.framework = framework;
 };
 
 export default configBackend;

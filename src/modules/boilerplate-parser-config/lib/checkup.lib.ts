@@ -16,11 +16,11 @@ const {
   BOILERPLATE_EMPTY,
   BOILERPLATE_NO_ENVIRONMENT,
   BOILERPLATE_INVALID_ENVIRONMENT,
-  BOILERPLATE_LANGUAGE_NOT_REQUIRED_WITH_FRONTEND_ENVIRONMENT,
   BOILERPLATE_NO_LANGUAGE,
   BOILERPLATE_INVALID_LANGUAGE,
   BOILERPLATE_INVALID_FRAMEWORK,
   BOILERPLATE_TYPESCRIPT_BOOLEAN,
+  BOILERPLATE_TYPESCRIPT_NOT_COMPATIBLE,
 } = constants.ERROR;
 
 const checkup = {
@@ -45,44 +45,67 @@ const checkup = {
       console.log(BOILERPLATE_NO_ENVIRONMENT);
       process.exit(1);
     }
-    if (!environments.includes(boilerplateConfig.environment)) {
+    if (!environments.includes(boilerplateConfig.environment.toLowerCase())) {
       console.log(BOILERPLATE_INVALID_ENVIRONMENT);
       process.exit(1);
     }
   },
 
   boilerplateFrontend: (boilerplateConfig: Partial<IBoilerPlateConfig>) => {
-    const frontendFrameworks = config.frontendFrameworks;
+    const jsFrameworks = config.frontendJsFrameworks;
+    const pyFrameworks = config.frontendPythonFrameworks;
+    const languages = config.languages;
+
     const language = boilerplateConfig.language;
     const framework = boilerplateConfig.framework;
     const typescript = boilerplateConfig.typescript;
-  
-    if (language) {
-      console.log(BOILERPLATE_LANGUAGE_NOT_REQUIRED_WITH_FRONTEND_ENVIRONMENT);
+
+    if (!language) {
+      console.log(BOILERPLATE_NO_LANGUAGE);
       process.exit(1);
     }
-  
-    if (framework) {
-      if (!frontendFrameworks.includes(framework)) {
-        console.log(BOILERPLATE_INVALID_FRAMEWORK, frontendFrameworks.join(', '));
+
+    if (!languages.includes(language.toLowerCase())) {
+      console.log(BOILERPLATE_INVALID_LANGUAGE, languages.join(', '));
+      process.exit(1);
+    }
+
+    if (language === 'javascript') {
+      if (framework) {
+        if (!jsFrameworks.includes(framework.toLowerCase())) {
+          console.log(BOILERPLATE_INVALID_FRAMEWORK, jsFrameworks.join(', '));
+          process.exit(1);
+        }
+      } else {
+        boilerplateConfig.framework = 'vanilla';
+      }
+    }
+
+    if (language === 'python') {
+      if (framework) {
+        if (!pyFrameworks.includes(framework.toLowerCase())) {
+          console.log(BOILERPLATE_INVALID_FRAMEWORK, pyFrameworks.join(', '));
+          process.exit(1);
+        }
+      }
+    }
+
+    if (typeof typescript === 'boolean') {
+
+      if (language !== 'javascript') {
+        console.log(BOILERPLATE_TYPESCRIPT_NOT_COMPATIBLE);
         process.exit(1);
       }
-    } else {
-      boilerplateConfig.framework = 'vanilla';
-    }
-  
-    if (typescript) {
       if (typeof typescript !== 'boolean') {
         console.log(BOILERPLATE_TYPESCRIPT_BOOLEAN);
         process.exit(1);
       }
-    } else {
-      boilerplateConfig.typescript = false;
     }
   },
 
   boilerplateBackend: (boilerplateConfig: Partial<IBoilerPlateConfig>) => {
-    const backendFrameworks = config.backendFrameworks;
+    const jsFrameworks = config.backendJsFrameworks;
+    const pyFrameworks = config.backendPythonFrameworks;
     const languages = config.languages;
     const language = boilerplateConfig.language;
     const framework = boilerplateConfig.framework;
@@ -93,27 +116,38 @@ const checkup = {
       process.exit(1);
     }
 
-    if (!languages.includes(language)) {
+    if (!languages.includes(language.toLowerCase())) {
       console.log(BOILERPLATE_INVALID_LANGUAGE, languages.join(', '));
       process.exit(1);
     }
   
     if (framework) {
-      if (!backendFrameworks.includes(framework)) {
-        console.log(BOILERPLATE_INVALID_FRAMEWORK, backendFrameworks.join(', '));
-        process.exit(1);
+      if (language === 'javascript') {
+        if (!jsFrameworks.includes(framework.toLowerCase())) {
+          console.log(BOILERPLATE_INVALID_FRAMEWORK, jsFrameworks.join(', '));
+          process.exit(1);
+        }
+      } else {
+        boilerplateConfig.framework = 'vanilla';
       }
-    } else {
-      boilerplateConfig.framework = 'vanilla';
+
+      if (language === 'python') {
+        if (!pyFrameworks.includes(framework.toLowerCase())) {
+          console.log(BOILERPLATE_INVALID_FRAMEWORK, pyFrameworks.join(', '));
+          process.exit(1);
+        }
+      }
     }
   
-    if (typescript) {
+    if (typeof typescript === 'boolean') {
+      if (language !== 'javascript') {
+        console.log(BOILERPLATE_TYPESCRIPT_NOT_COMPATIBLE);
+        process.exit(1);
+      }
       if (typeof typescript !== 'boolean') {
         console.log(BOILERPLATE_TYPESCRIPT_BOOLEAN);
         process.exit(1);
       }
-    } else {
-      boilerplateConfig.typescript = false;
     }
   },
 
