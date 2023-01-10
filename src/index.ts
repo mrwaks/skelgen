@@ -6,18 +6,20 @@
 import { 
   boilerplatePromptConfig, 
   boilerplateParserConfig,
+  boilerplateGenerator,
 } from './modules/index.js';
 
 const main = async ([, , ...args] = process.argv) => {
   if (!args.length) {
     let boilerplateConfig = {};
     await boilerplatePromptConfig(boilerplateConfig);
-    console.log('Here\'s your boilerplate config:', boilerplateConfig);
+    await boilerplateGenerator(boilerplateConfig);
+    console.log('Your boilerplate has been successfully generated !');
   }
-  if (args.length === 1 && /^config/.test(args[0])) {
-    console.log('Parsing started...');
+  if (args.length === 1 && /^config$/.test(args[0])) {
     const boilerplateConfig = await boilerplateParserConfig();
-    console.log('Here\'s your boilerplate config:', boilerplateConfig);
+    await boilerplateGenerator(boilerplateConfig);
+    console.log('Your boilerplate has been successfully generated !');
   }
 };
 
